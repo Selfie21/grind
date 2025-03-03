@@ -5,22 +5,27 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        min = len(nums) + 1
-        total = nums[0]
-        start = 0
-        end = 1
-        while start < len(nums) and end <= len(nums):
-            total += start
-            if total >= target:
-                if min > (end - start):
-                    min = end - start
-                start += 1
-            end += 1
-        if min == len(nums) + 1:
+        minimum = float("inf")
+        end = 0
+        sum = nums[end]
+        for start in range(len(nums)):
+            while sum < target:
+                if end + 1 >= len(nums):
+                    break
+                else:
+                    end += 1
+                sum += nums[end]
+            if sum >= target:
+                tmp_min = (end - start) + 1
+                if tmp_min < minimum:
+                    minimum = tmp_min
+            sum -= nums[start]
+        if minimum == float("inf"):
             return 0
-        return min
+        else:
+            return minimum
 target = 7
-nums = [2,3,1,2,4,3]
+nums = [1,7,4]
 solution = Solution()
 k = solution.minSubArrayLen(target, nums)
 print(k)
